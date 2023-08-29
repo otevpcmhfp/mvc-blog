@@ -1,5 +1,6 @@
 <?php
 require('models/BlogModel.php');
+$blog = new BlogModel();
 
 $id = $_GET['id'] ?? $_POST['id'] ?? null;
 $method = $_SERVER["REQUEST_METHOD"];
@@ -10,7 +11,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 // GET
 // /blog
 if(!isset($action) && !isset($id) && $method === 'GET') {
-    $posts = allPosts();
+    $posts = $blog->allPosts();
     require 'views/blog/index.view.php';
     exit();
 }
@@ -29,7 +30,7 @@ if(!isset($id) && $action === 'add' && $method === 'POST') {
     $author = $_POST['author'] ?? '';
     $excerpt = $_POST['excerpt'] ?? '';
     $contents = $_POST['contents'] ?? '';
-    addPost($title,$author,$excerpt,$contents);
+    $blog->addPost($title,$author,$excerpt,$contents);
     header("Location: /blog");
     exit();
 }
@@ -38,7 +39,7 @@ if(!isset($id) && $action === 'add' && $method === 'POST') {
 // GET
 // /blog/id=[id]
 if(!isset($action) && isset($id) && $method === 'GET') {
-    $post = getPost($id);
+    $post = $blog->getPost($id);
     require "views/blog/details.view.php";
     exit();
 }
@@ -46,7 +47,7 @@ if(!isset($action) && isset($id) && $method === 'GET') {
 // GET
 // /blog/id=[id]&action=edit
 if(isset($id) && $method === 'GET' && $action === 'edit') {
-    $post = getPost($id);
+    $post = $blog->getPost($id);
     require "views/blog/add.view.php";
     exit();
 }
@@ -58,7 +59,7 @@ if(isset($id) && $method === 'POST' && $action === 'edit') {
     $author = $_POST['author'] ?? '';
     $excerpt = $_POST['excerpt'] ?? '';
     $contents = $_POST['contents'] ?? '';
-    updatePost($id,$title,$author,$excerpt,$contents);
+    $blog->updatePost($id,$title,$author,$excerpt,$contents);
     header("Location: /blog?id=$id&action=edit");
     exit();
 }
@@ -66,7 +67,7 @@ if(isset($id) && $method === 'POST' && $action === 'edit') {
 // DELETE
 // /blog/id=[id]
 if(isset($id) && $method === 'POST' && $action === 'delete') {
-    deletePost($id);
+    $blog->deletePost($id);
     header("Location: /blog");
 }
 
