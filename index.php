@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'Database.php';
 
 // Get the requested path
@@ -8,6 +9,7 @@ $route = parse_url($_SERVER['REQUEST_URI'])['path'];
 $routes = [
     '/' => 'controllers/HomeController.php',
     '/blog' => 'controllers/BlogController.php',
+    '/session' => 'controllers/SessionController.php',
 ];
 
 // Check our routes map to see if we have a place to go
