@@ -14,14 +14,14 @@
         <?php foreach($posts as $post): ?>
         <tr>
             
-            <td><?=$post['title']?></td>
-            <td><?=$post['created_at']?></td>
+            <td><?=$post->title?></td>
+            <td><?=$post->created_at?></td>
             <td>
-                <form method="post" action="/blog?id=<?=$post['id']?>">
+                <form method="post" action="/blog?id=<?=$post->id; ?>">
                     <input type="hidden" name="action" value="delete" />
                     <input type="submit" value="Delete" />
                 </form>
-                <a href="/blog?id=<?=$post['id']?>">View</a>
+                <a href="/blog?id=<?=$post->id; ?>">View</a>
             </td>
         </tr>
         <?php endforeach; ?>
