@@ -11,6 +11,6 @@
 <?=nl2br($post->contents)?>
 </div>
 
-<a href="/blog?id=<?=$post->id; ?>&action=edit">Edit</a>
+<a href="<?=$webRoot?>/blog?id=<?=$post->id; ?>&action=edit">Edit</a>
 
 <?php include('views/partials/footer.php'); ?>

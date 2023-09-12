@@ -1,22 +1,30 @@
 :root {
     font-size: 14px;
     line-height: 1.75;
+
+    --main-bg: #edede9;
+    --color-blue: #4361ee;
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    --font-family-open-sans: 'Open Sans', serif;
 }
 
 *,
 *::before,
 *::after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
     -webkit-text-size-adjust: 100%;
+    background-color: var(--main-bg);
 }
-  
+
 body {
     height: 100vh;
     width: 100%;
@@ -25,12 +33,14 @@ body {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     row-gap: 1rem;
+    font-family: var(--font-family-open-sans);
 }
 
 header {
     padding: 1rem;
     grid-row: 1 / 2;
-    margin: 0 auto;
+    width: 100%;
+    background-color: var(--color-blue);
 }
 
 main {
@@ -49,7 +59,7 @@ table, td, th {
 td {
     padding: 0 .5rem;
 }
-  
+
 table {
     /* width: 100%; */
     border-collapse: collapse;
@@ -57,7 +67,8 @@ table {
 
 .container {
     padding: 1rem;
+    width: 600px;
     margin: 0 auto;
-    width: 500px;
+
     border: 1px solid #000000;
 }

@@ -1,66 +1,97 @@
 <?php
-
 class BlogModel
 {
-    protected $db;
-    public $id;
-    public $title;
-    public $author;
-    public $excerpt;
-    public $contents;
-    public $created_at;
+    public ?int $id;
+    public string $title;
+    public string $author;
+    public string $excerpt;
+    public string $contents;
+    public ?string $created_at;
 
-    public function __construct(array $properties=[]) {
-        $this->db = new Database();
-        foreach ($properties as $key => $value) {
-            $this->{$key} = $value;
-        }
+    public function __construct(string $title,
+                                string $author,
+                                string $excerpt,
+                                string $contents,
+                                ?int $id = null,
+                                ?string $created_at = null
+    )
+    {
+
+        $this->title = $title;
+        $this->author = $author;
+        $this->excerpt = $excerpt;
+        $this->contents = $contents;
+        $this->id = $id;
+        $this->created_at = $created_at;
+
     }
 
     /**
      * @return BlogModel[]
      */
-    function allPosts(): array
+    public static function allPosts(): array
     {
         $query = "SELECT id,title,author,excerpt,contents,created_at FROM myblog.posts";
-        $results = $this->db->queryAll($query);
+        $results = Database::queryAll($query);
         $blogPosts = [];
         foreach ($results as $result) {
-            $blogPosts[] = new BlogModel($result);
+            $blogPosts[] = new BlogModel(
+                $result['title'],
+                $result['author'],
+                $result['excerpt'],
+                $result['contents'],
+                $result['id'],
+                $result['created_at']
+            );
         }
         return $blogPosts;
     }
 
-    function recentPosts(): false|array
+    public static function recentPosts(): false|array
     {
         $query = "SELECT id,title,author,excerpt,contents,created_at FROM myblog.posts LIMIT 5";
-        $results = $this->db->queryAll($query);
+        $results = Database::queryAll($query);
         $blogPosts = [];
         foreach ($results as $result) {
-            $blogPosts[] = new BlogModel($result);
+            $blogPosts[] = new BlogModel(
+                $result['title'],
+                $result['author'],
+                $result['excerpt'],
+                $result['contents'],
+                $result['id'],
+                $result['created_at'],
+            );
         }
         return $blogPosts;
     }
 
-    function getPost($id): BlogModel
+    public static function getPost($id): BlogModel
     {
         $query = "SELECT id,title,author,excerpt,contents,created_at FROM myblog.posts WHERE id = :id";
-        $result = $this->db->querySingle($query, [
+        $result = Database::querySingle($query, [
             ':id' => $id
         ]);
-        return new BlogModel($result);
+        return new BlogModel(
+            $result['title'],
+            $result['author'],
+            $result['excerpt'],
+            $result['contents'],
+            $result['id'],
+            $result['created_at'],
+        );
     }
 
-    function addPost($title,$author,$excerpt,$contents) {
+    public function save() {
+
         try {
             $query = 'INSERT INTO myblog.posts (title,author,excerpt,contents)
                       VALUES (:title,:author,:excerpt,:contents)';
 
-            return $this->db->execute($query, [
-                ':title' => $title,
-                ':author' => $author,
-                ':excerpt' => $excerpt,
-                ':contents' => $contents,
+            return Database::execute($query, [
+                ':title' => $this->title,
+                ':author' => $this->author,
+                ':excerpt' => $this->excerpt,
+                ':contents' => $this->contents,
             ]);
 
 
@@ -80,19 +111,19 @@ class BlogModel
 
     }
 
-    public function updatePost($id,$title,$author,$excerpt,$contents): bool {
+    public function update(): bool {
 
 
         $query = 'UPDATE myblog.posts
                   SET title = :title, author = :author, excerpt = :excerpt, contents = :contents
                   WHERE id = :id';
 
-        return $this->db->execute($query, [
-            ':id' => $id,
-            ':title' => $title,
-            ':author' => $author,
-            ':excerpt' => $excerpt,
-            ':contents' => $contents,
+        return Database::execute($query, [
+            ':id' => $this->id,
+            ':title' => $this->title,
+            ':author' => $this->author,
+            ':excerpt' => $this->excerpt,
+            ':contents' => $this->contents,
         ]);
 
 //        $statement = $this->db->query($query);
@@ -105,13 +136,13 @@ class BlogModel
 //        $statement->closeCursor();
     }
 
-    function deletePost($id): bool
+    public static function delete($id): bool
     {
 
         $query = 'DELETE FROM myblog.posts
                   WHERE id = :id';
 
-        return $this->db->execute($query, [
+        return Database::execute($query, [
             ':id' => $id
         ]);
 

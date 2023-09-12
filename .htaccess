@@ -1,3 +1,4 @@
+# Update the RewriteBase to match your path: e.g. /mvc-blog
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]

@@ -7,8 +7,8 @@
         <?php foreach($recentPosts as $post): ?>
             <li>
                 <a
-                href="/blog?id=<?=$post['id'];?>"
-                ><?=$post['title'];?></a>
+                href="<?=$webRoot?>/blog?id=<?=$post->id;?>"
+                ><?=$post->title;?></a>
             </li>
         <?php endforeach; ?>
     </ul>

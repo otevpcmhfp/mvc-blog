@@ -2,24 +2,28 @@
 
 class Database
 {
-    public PDO $db;
-    public function __construct() {
+    public static ?PDO $db = null;
+    public function __construct() {}
+
+    public static function connect():void {
         $dsn = 'mysql:localhost;dbname=myblog';
         $username = 'mybloguser';
         $password = 'myblogpw';
 
-        try {
-            $this->db = new PDO($dsn, $username, $password);
-        } catch (PDOException $e){
-            $error_message = $e->getMessage();
-            echo $error_message;
-            exit();
+        if(self::$db === null) {
+            try {
+                self::$db = new PDO($dsn, $username, $password);
+            } catch (PDOException $e){
+                $error_message = $e->getMessage();
+                echo $error_message;
+                exit();
+            }
         }
     }
 
-    private function prepare(string $queryString, array $bindings = []): false|PDOStatement
+    private static function prepare(string $queryString, array $bindings = []): false|PDOStatement
     {
-        $preparedStatement = $this->db->prepare($queryString);
+        $preparedStatement = self::$db->prepare($queryString);
         foreach($bindings as $bind => $value) {
             $preparedStatement->bindValue($bind, $value);
         }
@@ -27,26 +31,26 @@ class Database
         return $preparedStatement;
     }
 
-    public function queryAll(string $queryString, array $bindings = []): false|array
+    public static function queryAll(string $queryString, array $bindings = []): false|array
     {
-        $statement = $this->prepare($queryString, $bindings);
+        $statement = self::prepare($queryString, $bindings);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $statement->closeCursor();
         return $results;
     }
 
-    public function querySingle(string $queryString, array $bindings = []) {
-        $statement = $this->prepare($queryString, $bindings);
+    public static function querySingle(string $queryString, array $bindings = []) {
+        $statement = self::prepare($queryString, $bindings);
         $statement->execute();
-        $results = $statement->fetch();
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
         $statement->closeCursor();
         return $results;
     }
 
-    public function execute(string $queryString, array $bindings = []): bool
+    public static function execute(string $queryString, array $bindings = []): bool
     {
-        $statement = $this->prepare($queryString, $bindings);
+        $statement = self::prepare($queryString, $bindings);
         return $statement->execute();
     }
 

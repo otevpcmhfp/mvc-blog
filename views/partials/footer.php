@@ -1,6 +1,6 @@
 </div>
 </main>
-<footer>
+<footer class="footer">
     &copy; 2023 - My Blog
 </footer>
 </body>

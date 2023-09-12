@@ -1,6 +1,5 @@
 <?php
 require('models/BlogModel.php');
-$blog = new BlogModel();
 
 $id = $_GET['id'] ?? $_POST['id'] ?? null;
 $method = $_SERVER["REQUEST_METHOD"];
@@ -11,7 +10,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 // GET
 // /blog
 if(!isset($action) && !isset($id) && $method === 'GET') {
-    $posts = $blog->allPosts();
+    $posts = BlogModel::allPosts();
     require 'views/blog/index.view.php';
     exit();
 }
@@ -26,12 +25,16 @@ if($action === 'add' && $method === 'GET') {
 // POST
 // /blog?action=add
 if(!isset($id) && $action === 'add' && $method === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $author = $_POST['author'] ?? '';
-    $excerpt = $_POST['excerpt'] ?? '';
-    $contents = $_POST['contents'] ?? '';
-    $blog->addPost($title,$author,$excerpt,$contents);
-    header("Location: /blog");
+    $blog = new BlogModel(
+        $_POST['title'] ?? '',
+            $_POST['author'] ?? '',
+            $_POST['excerpt'] ?? '',
+            $_POST['contents'] ?? ''
+    );
+
+    $blog->save();
+
+    header("Location: $webRoot/blog");
     exit();
 }
 
@@ -39,7 +42,7 @@ if(!isset($id) && $action === 'add' && $method === 'POST') {
 // GET
 // /blog/id=[id]
 if(!isset($action) && isset($id) && $method === 'GET') {
-    $post = $blog->getPost($id);
+    $post = BlogModel::getPost($id);
     require "views/blog/details.view.php";
     exit();
 }
@@ -47,7 +50,7 @@ if(!isset($action) && isset($id) && $method === 'GET') {
 // GET
 // /blog/id=[id]&action=edit
 if(isset($id) && $method === 'GET' && $action === 'edit') {
-    $post = $blog->getPost($id);
+    $post = BlogModel::getPost($id);
     require "views/blog/add.view.php";
     exit();
 }
@@ -59,19 +62,25 @@ if(isset($id) && $method === 'POST' && $action === 'edit') {
     $author = $_POST['author'] ?? '';
     $excerpt = $_POST['excerpt'] ?? '';
     $contents = $_POST['contents'] ?? '';
-    $blog->updatePost($id,$title,$author,$excerpt,$contents);
-    header("Location: /blog?id=$id&action=edit");
+
+
+    $blog = new BlogModel(
+        $_POST['title'] ?? '',
+        $_POST['author'] ?? '',
+        $_POST['excerpt'] ?? '',
+        $_POST['contents'] ?? '',
+        $id
+    );
+
+    $blog->update();
+
+    header("Location: $webRoot/blog?id=$id&action=edit");
     exit();
 }
 
 // DELETE
 // /blog/id=[id]
 if(isset($id) && $method === 'POST' && $action === 'delete') {
-    $blog->deletePost($id);
-    header("Location: /blog");
+    BlogModel::delete($id);
+    header("Location: $webRoot/blog");
 }
-
-
-
-
-

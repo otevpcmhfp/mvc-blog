@@ -2,7 +2,7 @@
 <h1>My Blog</h1>
 <p>We're going to add a new post.</p>
 
-<form method="post" action="/blog">
+<form method="post" action="<?=$webRoot?>/blog">
     <?php if(isset($post)): ?>
         <input type="hidden" name="id" value="<?=$post->id; ?>" />
     <?php endif; ?>

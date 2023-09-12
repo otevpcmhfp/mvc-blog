@@ -17,17 +17,17 @@
             <td><?=$post->title?></td>
             <td><?=$post->created_at?></td>
             <td>
-                <form method="post" action="/blog?id=<?=$post->id; ?>">
+                <form method="post" action="<?=$webRoot?>/blog?id=<?=$post->id; ?>">
                     <input type="hidden" name="action" value="delete" />
                     <input type="submit" value="Delete" />
                 </form>
-                <a href="/blog?id=<?=$post->id; ?>">View</a>
+                <a href="<?=$webRoot?>/blog?id=<?=$post->id; ?>">View</a>
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 
-<a href="/blog?action=add">New Post</a>
+<a href="<?=$webRoot?>/blog?action=add">New Post</a>
 
 <?php include('views/partials/footer.php'); ?>
