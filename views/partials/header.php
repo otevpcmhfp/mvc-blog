@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="views/partials/css/app.css" />
+    <link rel="stylesheet" href="../css/app.css" />
     <title><?=$pageTitle ?? 'Home'?> | My Blog</title>
 </head>
 <header>
@@ -11,16 +11,16 @@
         <ul>
             <li><a href="<?=$webRoot?>/">Home</a></li>
             <li><a href="<?=$webRoot?>/blog">Blog</a></li>
-            <li><a href="<?=$webRoot?>/session">Session</a></li>
 
-            <?php if($isLoggedIn):?>
-                <li><a href="<?=$webRoot?>/sign-in?action=sign-out">Sign Out</a></li>
+            <?php if($auth->isLoggedIn()):?>
+                <li><a href="<?=$webRoot?>/sign-out">Sign Out</a></li>
             <?php else: ?>
                 <li><a href="<?=$webRoot?>/sign-in">Sign In</a></li>
+                <li><a href="<?=$webRoot?>/register">Register</a></li>
             <?php endif; ?>
         </ul>
-        <?php if($isLoggedIn):?>
-            <h3>Welcome back <?=$_SESSION['currentUser'];?>!</h3>
+        <?php if($auth->isLoggedIn()):?>
+            <h3>Welcome back <?=$auth->currentUser()?>!</h3>
         <?php endif; ?>
 
     </nav>

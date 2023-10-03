@@ -1,4 +1,4 @@
-<?php include('views/partials/header.php'); ?>
+<?php include('../views/partials/header.php'); ?>
 <h1><?=$post->title; ?></h1>
 <ul>
     <li><strong>Author:</strong> <?=$post->author; ?></li>
@@ -13,4 +13,4 @@
 
 <a href="<?=$webRoot?>/blog?id=<?=$post->id; ?>&action=edit">Edit</a>
 
-<?php include('views/partials/footer.php'); ?>
+<?php include('../views/partials/footer.php'); ?>

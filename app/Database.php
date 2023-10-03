@@ -53,7 +53,4 @@ class Database
         $statement = self::prepare($queryString, $bindings);
         return $statement->execute();
     }
-
-
-
 }

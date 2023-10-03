@@ -1,4 +1,4 @@
-<?php include('views/partials/header.php'); ?>
+<?php include view('partials/header.php'); ?>
     <h1>Sign In</h1>
     <p>Sign in to manage your posts</p>
 
@@ -15,4 +15,4 @@
     </form>
 
 
-<?php include('views/partials/footer.php'); ?>
+<?php include view('partials/footer.php'); ?>

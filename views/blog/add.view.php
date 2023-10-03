@@ -1,13 +1,11 @@
-<?php include('views/partials/header.php'); ?>
+<?php include view('partials/header.php'); ?>
 <h1>My Blog</h1>
 <p>We're going to add a new post.</p>
 
-<form method="post" action="<?=$webRoot?>/blog">
+<form method="post" action="<?=$webRoot?>/blog/<?=isset($post) ? 'show' : 'create' ?>">
     <?php if(isset($post)): ?>
         <input type="hidden" name="id" value="<?=$post->id; ?>" />
     <?php endif; ?>
-    
-    <input type="hidden" name="action" value="<?=$action?>" />
 
     <label for="title">Title</label>
     <input type="text" id="title" name="title" value="<?=$post->title ?? ''?>"><br />
@@ -25,4 +23,4 @@
 </form>
 
 
-<?php include('views/partials/footer.php'); ?>
+<?php include view('partials/footer.php'); ?>
