@@ -16,7 +16,7 @@ class UserModel extends PersonModel {
 
     public static function signIn(string $email, string $password):bool {
         $query = "SELECT * FROM myblog.users WHERE email = :email AND password = :password";
-        $result = Database::querySingle($query, [
+        $result = $db->querySingle($query, [
             ':email' => $email,
             ':password' => $password
         ]);

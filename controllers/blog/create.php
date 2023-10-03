@@ -16,7 +16,17 @@ if ($method === 'POST') {
         $_POST['contents'] ?? ''
     );
 
-    $blog->save();
+    $query = 'INSERT INTO myblog.posts (title,author,excerpt,contents)
+                      VALUES (:title,:author,:excerpt,:contents)';
+
+    $db->execute($query, [
+        ':title' => $blog->title,
+        ':author' => $blog->author,
+        ':excerpt' => $blog->excerpt,
+        ':contents' => $blog->contents,
+    ]);
+
+//    $blog->save();
     header("Location: $webRoot/blog");
     exit();
 }

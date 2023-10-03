@@ -13,6 +13,7 @@ $routes = [
     "$webRoot/blog" => controller('blog/index.php'),
     "$webRoot/blog/create" => controller('blog/create.php'),
     "$webRoot/blog/show" => controller('blog/show.php'),
+    "$webRoot/blog/delete" => controller('blog/delete.php'),
     "$webRoot/sign-in" => controller('user/sign-in.php'),
     "$webRoot/sign-out" => controller('user/sign-out.php'),
     "$webRoot/register" => controller('UserController.php'),
