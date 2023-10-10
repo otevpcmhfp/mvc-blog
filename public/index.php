@@ -1,16 +1,26 @@
 <?php
+session_start();
+
 CONST BASE_DIR = __DIR__.'/../';
+CONST WEB_ROOT = '';
 require BASE_DIR . 'helpers/paths.php';
+require BASE_DIR . 'helpers/links.php';
 
 // AUTH
-require app('Auth.php');
-$auth = new Auth();
+app('Auth.php');
 
 // DB
-require app('Database.php');
-$db = new Database();
-//die(var_dump($db));
+app('Database.php');
+
+// MODELS
+addModel("Blog");
+addModel("User");
+
+// REPOSITORIES
+addRepository('Base');
+addRepository('Blog');
+addRepository('User');
 
 // ROUTING
-require app('Router.php');
-require config('routes.php');
+app('Router.php');
+config('routes.php');

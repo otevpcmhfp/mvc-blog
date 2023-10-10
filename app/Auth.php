@@ -3,18 +3,20 @@
 class Auth
 {
 
-    public function __construct() {
-        session_start();
+    private static function configure(): void
+    {
         if(!isset($_SESSION['currentUser'])) {
             $_SESSION['currentUser'] = false;
         }
     }
 
-    public function isLoggedIn():bool {
+    public static function isLoggedIn():bool {
+        self::configure();
         return !!$_SESSION['currentUser'];
     }
 
-    public function currentUser():?string {
+    public static function currentUser():?string {
+        self::configure();
         return $_SESSION['currentUser'];
     }
 }

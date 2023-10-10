@@ -1,17 +1,19 @@
 <?php
-require model('UserModel.php');
+$user = new UserRepository();
 $method = $_SERVER["REQUEST_METHOD"];
 
 if($method === 'GET') {
-    require view("user/index.view.php");
+    view("user/index", [
+        'pageTitle' => 'Sign In'
+    ]);
     exit();
 }
 
 if($method === 'POST') {
-    if(UserModel::signIn($_POST['email'] ?? '', $_POST['password'] ?? '')) {
-        header("Location: $webRoot/");
+    if($user->signIn($_POST['email'] ?? '', $_POST['password'] ?? '')) {
+        header("Location: " . href("/"));
     } else {
-        header("Location: $webRoot/sign-in");
+        header("Location: " . href("/sign-in"));
     }
     exit();
 }

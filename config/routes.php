@@ -16,7 +16,7 @@ $routes = [
     "$webRoot/blog/delete" => controller('blog/delete.php'),
     "$webRoot/sign-in" => controller('user/sign-in.php'),
     "$webRoot/sign-out" => controller('user/sign-out.php'),
-    "$webRoot/register" => controller('UserController.php'),
+    "$webRoot/register" => controller('user/register.php'),
 ];
 
 // Check our routes map to see if we have a place to go
@@ -24,5 +24,5 @@ if(array_key_exists($route, $routes)) {
     require($routes[$route]);
 } else {
     http_response_code(404);
-    require view('404.php');
+    view('404.php');
 }

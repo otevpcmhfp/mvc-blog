@@ -83,7 +83,7 @@ if(array_key_exists($route, $routes)) {
 
 ---
 
-**views/home/index.view.php**
+**views/home/index**
 
 ```php
 <?php include('views/partials/header.php'); ?>
@@ -109,7 +109,7 @@ if(array_key_exists($route, $routes)) {
 
 ---
 
-**views/blog/index.view.php**
+**views/blog/index**
 
 ```php
 <?php include('views/partials/header.php'); ?>
@@ -149,7 +149,7 @@ if(array_key_exists($route, $routes)) {
 
 ---
 
-**views/blog/add.view.php**
+**views/blog/add**
 
 ```php
 <?php include('views/partials/header.php'); ?>
@@ -184,7 +184,7 @@ if(array_key_exists($route, $routes)) {
 
 ---
 
-**views/blog/details.view.php**
+**views/blog/details**
 
 ```php
 <?php include('views/partials/header.php'); ?>
@@ -429,7 +429,7 @@ require('models/BlogModel.php');
 $pageTitle = "Home";
 
 $recentPosts = recentPosts();
-require "views/home/index.view.php";
+require "views/home/index";
 exit();
 
 
@@ -453,14 +453,14 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 // /blog
 if(!isset($action) && !isset($id) && $method === 'GET') {
     $posts = allPosts();
-    require 'views/blog/index.view.php';
+    require 'views/blog/index';
     exit();
 }
 
 // GET
 // /blog?action=add
 if($action === 'add' && $method === 'GET') {
-    require 'views/blog/add.view.php';
+    require 'views/blog/add';
     exit();
 }
 
@@ -481,7 +481,7 @@ if(!isset($id) && $action === 'add' && $method === 'POST') {
 // /blog/id=[id]
 if(!isset($action) && isset($id) && $method === 'GET') {
     $post = getPost($id);
-    require "views/blog/details.view.php";
+    require "views/blog/details";
     exit();
 }
 
@@ -489,7 +489,7 @@ if(!isset($action) && isset($id) && $method === 'GET') {
 // /blog/id=[id]&action=edit
 if(isset($id) && $method === 'GET' && $action === 'edit') {
     $post = getPost($id);
-    require "views/blog/add.view.php";
+    require "views/blog/add";
     exit();
 }
 

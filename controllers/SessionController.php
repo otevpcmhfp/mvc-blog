@@ -21,6 +21,6 @@ if($action === 'destroy' && $method === 'POST') {
     header("Location: $webRoot/session");
 }
 
-require "views/session/index.view.php";
+require "views/session/index";
 exit();
 

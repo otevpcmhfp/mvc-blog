@@ -11,14 +11,14 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 // /blog
 if(!isset($action) && !isset($id) && $method === 'GET') {
     $posts = BlogModel::allPosts();
-    require 'views/blog/index.view.php';
+    require 'views/blog/index';
     exit();
 }
 
 // GET
 // /blog?action=add
 if($action === 'add' && $method === 'GET') {
-    require 'views/blog/add.view.php';
+    require 'views/blog/add';
     exit();
 }
 
@@ -43,7 +43,7 @@ if(!isset($id) && $action === 'add' && $method === 'POST') {
 // /blog/id=[id]
 if(!isset($action) && isset($id) && $method === 'GET') {
     $post = BlogModel::getPost($id);
-    require "views/blog/details.view.php";
+    require "views/blog/details";
     exit();
 }
 
@@ -51,7 +51,7 @@ if(!isset($action) && isset($id) && $method === 'GET') {
 // /blog/id=[id]&action=edit
 if(isset($id) && $method === 'GET' && $action === 'edit') {
     $post = BlogModel::getPost($id);
-    require "views/blog/add.view.php";
+    require "views/blog/add";
     exit();
 }
 

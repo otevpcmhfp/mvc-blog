@@ -31,5 +31,5 @@ if($action === 'sign-out' && $method === 'GET') {
     exit();
 }
 
-require "views/user/index.view.php";
+require "views/user/index";
 exit();

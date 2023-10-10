@@ -1,5 +1,9 @@
 <?php
-require(model('BlogModel.php'));
-$recentPosts = BlogModel::recentPosts();
-require view("home/index.view.php");
+$blog = new BlogRepository();
+$recentPosts = $blog->recent();
+
+view("home/index", [
+    'pageTitle' => "Home",
+    'recentPosts' => $recentPosts
+]);
 exit();

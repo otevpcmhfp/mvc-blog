@@ -1,56 +1,25 @@
 <?php
-require "PersonModel.php";
 
-class UserModel extends PersonModel {
+class UserModel
+{
 
-    private ?string $email;
-    private ?string $password;
-    private DateTime $created_at;
+    public ?int $id;
+    public string $first_name;
+    public string $last_name;
+    public string $email;
+    public string $password;
 
-    public function __construct(string $firstName, string $lastName, ?string $email = null, ?string $password = null)
+    public function __construct(string $first_name,
+                                string $last_name,
+                                string $email,
+                                string $password,
+                                ?int   $id = null
+    )
     {
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->password = $password;
-        parent::__construct($firstName, $lastName);
-    }
-
-    public static function signIn(string $email, string $password):bool {
-        $query = "SELECT * FROM myblog.users WHERE email = :email AND password = :password";
-        $result = $db->querySingle($query, [
-            ':email' => $email,
-            ':password' => $password
-        ]);
-        if($result) {
-            $_SESSION['currentUser'] = $result['first_name'] . ' ' . $result['last_name'];
-        } else {
-            $_SESSION['currentUser'] = null;
-        }
-
-        return !!$result;
-    }
-
-    public function getEmail():string {
-        return $this->email;
-    }
-
-    public function setEmail(string $email):void {
-        $this->email = $email;
-    }
-
-    public function getPassword():string {
-        return $this->password;
-    }
-
-    public function setPassword(string $password):void {
-        $this->password = $password;
-    }
-
-    public function save():void {
-//        $this->db->execute('');
-    }
-
-    public function getFullName(): string
-    {
-        // TODO: Implement getFullName() method.
+        $this->id = $id;
     }
 }
